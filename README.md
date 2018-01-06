@@ -8,6 +8,10 @@ Miscellaneous helpers for React.
 yarn add downtools
 ```
 
+## hocFactory
+
+Simple HOC generator
+
 ## withViewport
 
 HOC to inject `viewportWidth` and `viewportHeight` properties into your views, for responsive rendering, and update them when the window resizes.
@@ -19,9 +23,8 @@ This example hides the menu inside a button on small screens:
 ```jsx
 import { withViewport } from "downtools";
 
-const MyComponent = ({viewportWidth, viewportHeight}) => (
-    viewportWidth < 800 ? <HamburgerMenu /> : <SideMenu />
-)
+const MyComponent = ({ viewportWidth, viewportHeight }) =>
+    viewportWidth < 800 ? <HamburgerMenu /> : <SideMenu />;
 
 export default withViewport()(MyComponent);
 ```
@@ -50,7 +53,7 @@ This allows you to detect whether server-side rendering is in progress, and if s
 
 When first rendering on the client ("rehydration") we have to do a little more work. Now the window is available your component might render differently -- but that's not what we actually want! In rehyrdation you want the page to render exactly as it was on the server, otherwise React gives errors.
 
-So to circumvent this the HOC takes a third configuration parameter, `handleRehydration`. If this set to `true` then the HOC will perform a special first-pass render where it *ignores* the window and provides the same default/browserless dimensions (and also `isBrowserless` true). The idea is you can perform a rehydration render with exactly the same state as you did on the server.
+So to circumvent this the HOC takes a third configuration parameter, `handleRehydration`. If this set to `true` then the HOC will perform a special first-pass render where it _ignores_ the window and provides the same default/browserless dimensions (and also `isBrowserless` true). The idea is you can perform a rehydration render with exactly the same state as you did on the server.
 
 The component will then immediately update its own state after mounting (state is updated a `setImmediate` call). This will cause an additional render where you have the real width and height.
 
